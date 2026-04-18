@@ -19,6 +19,7 @@ struct ContentView: View {
                     TextField("Enter your word", text: $newWord)
                         .keyboardType(.asciiCapable)
                         .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
                 }
 
                 Section {
@@ -30,8 +31,9 @@ struct ContentView: View {
                     }
                 }
             }
-            .navigationTitle("hola")
+            .navigationTitle(rootWord)
             .onSubmit(addNewWord)
+            .onAppear(perform: startGame)
         }
     }
 
@@ -47,6 +49,26 @@ struct ContentView: View {
         }
 
         newWord = ""
+    }
+
+    private func startGame() {
+        guard
+            let startingWordsUrl = Bundle.main.url(
+                forResource: "start",
+                withExtension: "txt"
+            )
+        else {
+            fatalError("Could not load start.txt from bundle.")
+        }
+
+        if let startingWords = try? String(
+            contentsOf: startingWordsUrl,
+            encoding: .utf8
+        ) {
+            let allWords = startingWords.components(separatedBy: "\n")
+
+            rootWord = allWords.randomElement() ?? "alarming"
+        }
     }
 }
 
