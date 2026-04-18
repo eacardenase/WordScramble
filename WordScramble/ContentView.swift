@@ -46,6 +46,13 @@ struct ContentView: View {
             } message: {
                 Text(errorMessage)
             }
+            .toolbar {
+                Button {
+                    startGame()
+                } label: {
+                    Label("Refresh", systemImage: "arrow.clockwise")
+                }
+            }
         }
     }
 
@@ -54,7 +61,10 @@ struct ContentView: View {
             in: .whitespacesAndNewlines
         )
 
-        guard !answer.isEmpty else { return }
+        guard !answer.isEmpty, answer.count >= 3, answer != rootWord else {
+            return
+        }
+
         guard isOriginal(word: answer) else {
             wordError(title: "Word used already", message: "Be more original")
 
