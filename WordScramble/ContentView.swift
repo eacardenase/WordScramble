@@ -14,15 +14,20 @@ struct ContentView: View {
     @State private var errorTitle = ""
     @State private var errorMessage = ""
     @State private var showingAlert = false
+    @State private var selection: TextSelection?
 
     var body: some View {
         NavigationStack {
             List {
                 Section {
-                    TextField("Enter your word", text: $newWord)
-                        .keyboardType(.asciiCapable)
-                        .textInputAutocapitalization(.never)
-                        .autocorrectionDisabled()
+                    TextField(
+                        "Enter your word",
+                        text: $newWord,
+                        selection: $selection
+                    )
+                    .keyboardType(.asciiCapable)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
                 }
 
                 Section {
