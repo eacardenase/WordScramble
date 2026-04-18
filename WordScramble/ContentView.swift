@@ -9,13 +9,24 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        List {
+            Section("Section 1") {
+                Text("Static row 1")
+                Text("Static row 2")
+            }
+
+            Section("Section 2") {
+                ForEach(0..<5) {
+                    Text("Dynamic row #\($0 + 1)")
+                }
+            }
+
+            Section("Section 3") {
+                Text("Static row 3")
+                Text("Static row 4")
+            }
         }
-        .padding()
+        .listStyle(.insetGrouped)
     }
 }
 
